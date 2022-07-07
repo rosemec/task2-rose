@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="createEmployee.css">
+    <title>Employee Application</title>
+</head>
+<body class="app">
+    <aside class="sidebar">
+            <a href="#">
+                <img src="assets/kv logo.png" alt="KeyValue Logo" class="logo">
+            </a>
+        <nav class="emp-list">
+            <a href="#">
+                <div class="list">
+                    <img src="assets/List.png" alt="Employee List" class="listImg">
+                    <span class="emp-list-link">Employee List</span>
+                </div>
+            </a>
+        </nav>
+    </aside>
+    <main class="emp-main">
+        <div class="heading">
+            <h1>Create Employee</h1>
+        </div>
+        <section class="emp-form">
+            <form>
+                <div class="details">
+                    <div class="data">
+                        <label for="name">Employee Name</label>
+                        <input type="text" name="name" id="name" placeholder="Employee Name">
+                    </div>
+                    <div class="data">
+                        <label for="empId">Employee ID</label>
+                        <input type="text" name="empId" id="empId" placeholder="Employee ID">
+                    </div>
+                    <div class="data">
+                        <label for="joinDate">Joining Date</label>
+                        <input type="date" name="joinDate" id="joinDate" placeholder="Joining Date">
+                    </div>
+                    <div class="data">
+                        <label for="email">Employee Email</label>
+                        <input type="text" name="email" id="email" placeholder="Employee Email">
+                    </div>
+                    <div class="data">
+                        <label for="role">Role</label>
+                        <select name="role" id="role">
+                            <option value="">Choose Role</option>
+                            <option value="role1">Role 1</option>
+                            <option value="role2">Role 2</option>
+                            <option value="role3">Role 3</option>
+                            <option value="role4">Role 4</option>
+                        </select>
+                    </div>
+                    <div class="data">
+                        <label for="status">Status</label>
+                        <select name="status" id="status" >
+                            <option value="">Choose Status</option>
+                            <option value="status1">Status 1</option>
+                            <option value="status2">Status 2</option>
+                            <option value="status3">Status 3</option>
+                            <option value="status4">Status 4</option>
+                        </select>
+                    </div>
+                    <div class="data">
+                        <label for="experience">Experience</label>
+                        <input type="text" name="experience" id="experience" placeholder="Experience">
+                    </div>
+                    <div class="data">
+                        <label for="address">Address</label>
+                        <input type="text" name="address" id="address" placeholder="Address">
+                    </div>
+                    <div class="data">
+                        <label for="idProof">Upload ID Proof</label>
+                        <input type="file" name="idProof" id="idProof" class="file">
+                    </div>
+                </div>
+                <div class="buttons">
+                    <input type="submit" name="create" id="create" value="Create" class="createb">
+                    <input type="button" name="cancel" id="cancel" value="Cancel" class="cancelb">
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+<script>
+    function validate() { 
+        let e = document.forms[0]['email'].value
+        let pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*\.\w{2,3}$/
+        return(pattern.test(e))
+    }
+    const display =  () => {
+
+        if(validate()==false){
+            alert('Invalid email id')
+        }
+        let labels = document.getElementsByTagName('label')
+        let empDetails = {}
+        for (let i=0; i<labels.length;i++){
+            empDetails[labels[i].innerHTML] = document.getElementById(labels[i].htmlFor).value
+            document.getElementById(labels[i].htmlFor).value=""
+            //console.log(labels[i].innerHTML, ":", document.getElementById(labels[i].htmlFor).value)
+        }
+        console.log(empDetails)
+        let submit = document.getElementById('create')
+        submit.style.backgroundColor='gray'
+    }
+    const debounce = function(func, delay=2000){
+        let debounceTimer;
+        //console.log('hello')
+        return function(){
+            const context = this  
+            const args = arguments
+            //console.log('hello1')
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(()=>func.apply(context,args),delay)
+        }
+    }
+    const handleSubmit = debounce(display)
+    document.getElementById('create').addEventListener('click', (event)=>{event.preventDefault(); handleSubmit()})
+</script>
+</html>
